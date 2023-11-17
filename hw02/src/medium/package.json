@@ -1,0 +1,14 @@
+{
+  "name": "da64663440247fa2",
+  "main": "da64663440247fa2@20.js",
+  "version": "20.0.0",
+  "homepage": "https://observablehq.com/d/da64663440247fa2",
+  "author": {
+    "name": "NTUT-Angel's Workspace",
+    "url": "https://observablehq.com/@ntut-angel-ws"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}
