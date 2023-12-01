@@ -1,0 +1,14 @@
+{
+  "name": "4af3fb5eafb7c371",
+  "main": "4af3fb5eafb7c371@19.js",
+  "version": "19.0.0",
+  "homepage": "https://observablehq.com/d/4af3fb5eafb7c371",
+  "author": {
+    "name": "lushuang226's Workspace",
+    "url": "https://observablehq.com/@lushuang226-ws"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}
