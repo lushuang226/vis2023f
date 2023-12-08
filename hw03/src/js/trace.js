@@ -1,15 +1,13 @@
 const icon = document.getElementById('icon');
 const jsonUrl = '../json/userLocationData.json';
 const traceContainer = document.getElementById('trace-container'); // 假設有一個元素用於容納移動痕跡
-
 let currentIndex = 0;
 let currentFloor = '1F'; // 新增 currentFloor 變數
-let userLocationData = null;
 
 function calculatePosition(x, y) {
-  const minX = 17.45;
+  const minX = 10.45;
   const maxX = 60.47;
-  const minY = -13.64;
+  const minY = -11.64;
   const maxY = 15.91;
 
   const iconX = ((x - minX) / (maxX - minX)) * 100;
@@ -19,15 +17,7 @@ function calculatePosition(x, y) {
 }
 
 function updateIconPosition(x, y) {
-  let { x: iconX, y: iconY } = calculatePosition(x, y);
-  if (currentFloor === '2F') {
-    iconX += 40;
-  } else if (currentFloor === '3F') {
-    iconY += 35;
-  } else if (currentFloor === '4F') {
-    iconX += 40;
-    iconY += 35;
-  }
+  const { x: iconX, y: iconY } = calculatePosition(x, y);
   icon.style.left = `${iconX}%`;
   icon.style.top = `${iconY}%`;
 
@@ -39,18 +29,9 @@ function updateIconPosition(x, y) {
   traceContainer.appendChild(tracePoint);
 }
 
-function loadjson() {
-  fetch(jsonUrl)
-    .then(response => response.json())
-    .then(data => {
-      userLocationData = data;
-    })
-    .catch(error => console.error('Error fetching or parsing JSON:', error));
-}
-
-function updatePage() {
-  if (userLocationData && userLocationData.length > 0) {
-    const point = userLocationData[currentIndex];
+function updateData(data) {
+  if (data && data.length > 0) {
+    const point = data[currentIndex];
 
     if (point.Floor !== currentFloor) {
       // 換樓層時的處理，這裡可以添加你的樓層切換相關邏輯
@@ -62,9 +43,23 @@ function updatePage() {
     currentIndex++;
 
     // 如果資料到達末尾，重新從頭開始
-    if (currentIndex >= userLocationData.length) {
+    if (currentIndex >= data.length) {
       currentIndex = 0;
     }
-    setTimeout(updatePage, document.getElementById('rangeBar').value);
   }
 }
+
+function loadJson() {
+  fetch(jsonUrl)
+    .then(response => response.json())
+    .then(data => {
+      updateData(data);
+    })
+    .catch(error => console.error('Error fetching or parsing JSON:', error));
+}
+
+// 初始加載 icon 位置
+loadJson();
+
+// 每秒更新一次位置
+setInterval(loadJson, 1000);
